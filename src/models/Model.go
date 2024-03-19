@@ -16,7 +16,7 @@ type User struct {
 	CreatedAt time.Time `json:"created_at,omitempty"`
 }
 
-func (user *User) validate() error {
+func (user *User) validate(forType string) error {
 	if user.Name == "" {
 		return errors.New("The name field can not be empty.")
 	}
@@ -26,7 +26,8 @@ func (user *User) validate() error {
 	if user.Email == "" {
 		return errors.New("The e-mail field can not be empty.")
 	}
-	if user.Password == "" {
+
+	if forType == "register" && user.Password == "" {
 		return errors.New("The password field can not be empty.")
 	}
 
@@ -40,8 +41,8 @@ func (user *User) format() {
 }
 
 // Prepare validates and formats the user obj
-func (user *User) Prepare() error {
-	if err := user.validate(); err != nil {
+func (user *User) Prepare(prepType string) error {
+	if err := user.validate(prepType); err != nil {
 		return err
 	}
 	user.format()

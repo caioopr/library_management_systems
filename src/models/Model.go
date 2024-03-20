@@ -1,6 +1,7 @@
 package models
 
 import (
+	"api/src/validation"
 	"errors"
 	"strings"
 	"time"
@@ -25,6 +26,10 @@ func (user *User) validate(forType string) error {
 	}
 	if user.Email == "" {
 		return errors.New("The e-mail field can not be empty.")
+	}
+
+	if err := validation.ValidateFormat(user.Email); err != nil {
+		return errors.New("The e-mail input has an invalid format.")
 	}
 
 	if forType == "register" && user.Password == "" {

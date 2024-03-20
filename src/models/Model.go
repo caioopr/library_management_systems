@@ -1,6 +1,7 @@
 package models
 
 import (
+	"api/src/security"
 	"api/src/validation"
 	"errors"
 	"strings"
@@ -39,10 +40,19 @@ func (user *User) validate(forType string) error {
 	return nil
 }
 
-func (user *User) format() {
+func (user *User) format(prepType string) error {
 	user.Name = strings.TrimSpace(user.Name)
 	user.Nickname = strings.TrimSpace(user.Nickname)
 	user.Email = strings.TrimSpace(user.Email)
+
+	if prepType == "register" {
+		hashedPassword, err := security.Hash(user.Password)
+		if err != nil {
+			return err
+		}
+		user.Password = string(hashedPassword)
+	}
+	return nil
 }
 
 // Prepare validates and formats the user obj
@@ -50,6 +60,9 @@ func (user *User) Prepare(prepType string) error {
 	if err := user.validate(prepType); err != nil {
 		return err
 	}
-	user.format()
+	if err := user.format(prepType); err != nil {
+		return err
+	}
+
 	return nil
 }

@@ -48,6 +48,8 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	user.Password = ""
+
 	responses.JSON(w, http.StatusCreated, user)
 }
 

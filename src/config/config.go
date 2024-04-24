@@ -15,6 +15,8 @@ var (
 
 	// Porta onde a API vai estar rodando
 	Port = 0
+
+	SecretKey []byte
 )
 
 // LoadEnv vai inicializar as variáveis de ambiente
@@ -35,4 +37,6 @@ func LoadEnv() {
 		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_NAME"),
 	)
+
+	SecretKey = []byte(os.Getenv("JWT_SECRET_KEY"))
 }

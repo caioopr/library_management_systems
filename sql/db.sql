@@ -24,3 +24,31 @@ CREATE TABLE users(
     password varchar(100) not null,
     created_at timestamp default current_timestamp()
 ) ENGINE=INNODB;
+
+CREATE TABLE authors(
+    id int auto_increment primary key,
+    name varchar(50) not null,
+);
+
+CREATE TABLE books(
+    id int auto_increment primary key,
+    title varchar(150) not null,
+	avarage_rating DECIMAL(4,2),
+	isbn             varchar(10) not null,
+	isbn13           varchar(13) not null,
+	language_code     varchar(10) not null,
+	num_pages         int not null default 0,
+	ratings_count     int not null default 0,
+	text_reviews_count int not null default 0,
+	publication_date timestamp,
+	publisher   varchar(150) not null     
+) ENGINE=INNODB;
+
+CREATE TABLE books_authors(
+    id int auto_increment primary key,
+    author_id int,
+    book_id int,
+    FOREIGN KEY (author_id) REFERENCES authors (id),
+    FOREIGN KEY (book_id) REFERENCES users (id)
+);
+

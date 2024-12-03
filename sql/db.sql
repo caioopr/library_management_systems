@@ -25,10 +25,14 @@ CREATE TABLE users(
     created_at timestamp default current_timestamp()
 ) ENGINE=INNODB;
 
+DROP TABLE IF EXISTS authors;
+
 CREATE TABLE authors(
     id int auto_increment primary key,
-    name varchar(50) not null,
-);
+    name varchar(50) not null
+)ENGINE=INNODB;
+
+DROP TABLE IF EXISTS books;
 
 CREATE TABLE books(
     id int auto_increment primary key,
@@ -44,11 +48,12 @@ CREATE TABLE books(
 	publisher   varchar(150) not null     
 ) ENGINE=INNODB;
 
+DROP TABLE IF EXISTS books_authors;
+
 CREATE TABLE books_authors(
     id int auto_increment primary key,
     author_id int,
     book_id int,
     FOREIGN KEY (author_id) REFERENCES authors (id),
-    FOREIGN KEY (book_id) REFERENCES users (id)
-);
-
+    FOREIGN KEY (book_id) REFERENCES books (id)
+)ENGINE=INNODB;

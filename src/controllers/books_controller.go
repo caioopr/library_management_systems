@@ -16,7 +16,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// CerateUser create a new user
+// CerateBook creates a new
 func CreateBook(w http.ResponseWriter, r *http.Request) {
 	body, err := io.ReadAll(r.Body)
 
@@ -55,7 +55,7 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 	responses.JSON(w, http.StatusCreated, user)
 }
 
-// GetUsers gets all users with an exact nickname or with a nickname that contains the nick
+// GetBooks gets all books with an exact title or with a title that contains the req. title
 func GetBooks(w http.ResponseWriter, r *http.Request) {
 	userNickname := strings.ToLower(r.URL.Query().Get("user"))
 
@@ -77,7 +77,7 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 	responses.JSON(w, http.StatusOK, users)
 }
 
-// GetUser gets a specific user
+// GetBook gets a specific book
 func GetBook(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userID, err := strconv.ParseUint(params["userId"], 10, 64)
@@ -116,7 +116,7 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 	responses.JSON(w, http.StatusOK, user)
 }
 
-// UpdateUser updates a specific user
+// UpdateBook updates a specific book
 func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userID, err := strconv.ParseUint(params["userId"], 10, 64)
@@ -167,7 +167,7 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	responses.JSON(w, http.StatusNoContent, nil)
 }
 
-// DeleteUser delete a specific user
+// DeleteBook deletes a specific book
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userID, err := strconv.ParseUint(params["userId"], 10, 64)

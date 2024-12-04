@@ -34,10 +34,11 @@ CREATE TABLE authors(
 
 DROP TABLE IF EXISTS books;
 
+-- TODO: Make avg_rating and count atrbts 
 CREATE TABLE books(
     id int auto_increment primary key,
     title varchar(150) not null,
-	avarage_rating DECIMAL(4,2),
+	avarage_rating DECIMAL(4,2), 
 	isbn             varchar(10) not null,
 	isbn13           varchar(13) not null,
 	language_code     varchar(10) not null,

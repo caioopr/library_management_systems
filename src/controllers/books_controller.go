@@ -25,14 +25,16 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var user models.User
+	var book models.Book
 
-	if err = json.Unmarshal(body, &user); err != nil {
+	if err = json.Unmarshal(body, &book); err != nil {
 		responses.Error(w, http.StatusBadRequest, err)
 		return
 	}
-	if err = user.Prepare("register"); err != nil {
+
+	if err = book.Validate(); err != nil {
 		responses.Error(w, http.StatusBadRequest, err)
+		return
 	}
 
 	db, err := database.NewConnection()
@@ -42,17 +44,15 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	usersRepo := repositories.NewUsersRepository(db)
-	user.ID, err = usersRepo.Create(user)
+	booksRepo := repositories.NewBooksRepository(db)
+	book.ID, err = booksRepo.Create(book)
 
 	if err != nil {
 		responses.Error(w, http.StatusInternalServerError, err)
 		return
 	}
 
-	user.Password = ""
-
-	responses.JSON(w, http.StatusCreated, user)
+	responses.JSON(w, http.StatusCreated, book)
 }
 
 // GetBooks gets all books with an exact title or with a title that contains the req. title

@@ -10,7 +10,7 @@ var booksRoutes = []Route{
 		URI:          "/books",
 		Method:       http.MethodPost,
 		Function:     controllers.CreateBook,
-		AuthRequired: true,
+		AuthRequired: false,
 	},
 	{
 		URI:          "/books",
